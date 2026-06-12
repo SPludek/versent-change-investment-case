@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Change Investment Case — Versent</title>
+<style>
+:root{--vk:#0D0D0D;--vd:#111418;--vs:#181D24;--vc:#1E252F;--vb:#2B3441;--vg:#2ECC71;--vgl:rgba(46,204,113,0.12);--va:#F39C12;--vr:#E74C3C;--vw:#FFFFFF;--vt:#E8ECF0;--vm:#8B96A3;--vi:#556070;--rad:6px;--radl:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--vd);color:var(--vt);min-height:100vh;line-height:1.6}
+header{background:var(--vk);border-bottom:1px solid var(--vb);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-name{font-size:1.1rem;font-weight:700;letter-spacing:0.08em;color:var(--vw);text-transform:uppercase}
+.header-tag{font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--vm)}
+.hero{background:linear-gradient(160deg,#0D1219 0%,#111820 60%,#0A1A12 100%);border-bottom:1px solid var(--vb);padding:4rem 2rem 3.5rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(46,204,113,0.07) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{display:inline-block;font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--vg);border:1px solid rgba(46,204,113,0.3);border-radius:100px;padding:4px 14px;margin-bottom:1.5rem}
+.hero h1{font-size:clamp(1.9rem,5vw,3rem);font-weight:700;letter-spacing:-0.02em;color:var(--vw);line-height:1.15;margin-bottom:1rem}
+.hero h1 span{color:var(--vg)}
+.hero p{font-size:1.05rem;color:var(--vm);max-width:560px;margin:0 auto 2.5rem}
+.hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+.hero-stat strong{display:block;font-size:1.6rem;font-weight:700;color:var(--vg);line-height:1}
+.hero-stat span{font-size:0.75rem;color:var(--vm);text-transform:uppercase;letter-spacing:0.08em}
+main{max-width:780px;margin:0 auto;padding:2.5rem 2rem 4rem}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:1.2rem}
+.section-num{width:28px;height:28px;background:var(--vgl);border:1px solid rgba(46,204,113,0.3);border-radius:var(--rad);font-size:0.75rem;font-weight:700;color:var(--vg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.section-header h2{font-size:1rem;font-weight:600;color:var(--vw)}
+.section-header p{font-size:0.8rem;color:var(--vm)}
+.card{background:var(--vc);border:1px solid var(--vb);border-radius:var(--radl);padding:1.4rem 1.6rem;margin-bottom:1rem}
+.card label{display:block;font-size:0.9rem;font-weight:600;color:var(--vt);margin-bottom:0.4rem}
+.card .sublabel{font-size:0.8rem;color:var(--vm);margin-bottom:0.9rem}
+.input-wrap{position:relative}
+.input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1rem;font-weight:600;color:var(--vm)}
+input[type=number]{width:100%;background:var(--vs);border:1px solid var(--vb);border-radius:var(--rad);padding:12px 14px 12px 28px;font-size:1.1rem;font-weight:600;color:var(--vw);outline:none;transition:border-color 0.2s;-moz-appearance:textfield}
+input[type=number]:focus{border-color:var(--vg)}
+input[type=number]::placeholder{color:var(--vi);font-weight:400;font-size:0.95rem}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+.q-label{display:block;font-size:0.9rem;font-weight:600;color:var(--vt);margin-bottom:0.9rem}
+.options-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px}
+.opt-btn{background:var(--vs);border:1px solid var(--vb);border-radius:var(--rad);padding:10px 12px;font-size:0.82rem;color:var(--vm);cursor:pointer;transition:all 0.15s;text-align:left;line-height:1.4;width:100%}
+.opt-btn:hover{border-color:rgba(46,204,113,0.35);color:var(--vt)}
+.opt-btn.selected{background:var(--vgl);border-color:var(--vg);color:var(--vw);font-weight:500}
+.opt-score{display:block;font-size:0.7rem;color:var(--vi);margin-top:2px;font-weight:400}
+.opt-btn.selected .opt-score{color:rgba(46,204,113,0.7)}
+.section-divider{border:none;border-top:1px solid var(--vb);margin:2rem 0}
+.cta-row{display:flex;justify-content:center;margin-top:2.5rem}
+.btn-calculate{background:var(--vg);color:#0a1a0e;border:none;border-radius:var(--rad);padding:14px 36px;font-size:0.95rem;font-weight:700;letter-spacing:0.04em;cursor:pointer;transition:background 0.15s,transform 0.1s;text-transform:uppercase}
+.btn-calculate:hover:not(:disabled){background:#34d979;transform:translateY(-1px)}
+.btn-calculate:disabled{background:var(--vb);color:var(--vi);cursor:not-allowed}
+.incomplete-hint{text-align:center;font-size:0.8rem;color:var(--vi);margin-top:0.75rem}
+#results{display:none;margin-top:3rem;border-top:1px solid var(--vb);padding-top:3rem}
+.results-title{font-size:1.4rem;font-weight:700;color:var(--vw);margin-bottom:0.3rem}
+.results-sub{font-size:0.9rem;color:var(--vm);margin-bottom:2rem}
+.risk-hero{background:linear-gradient(135deg,#1a0a08,#2a1008);border:1px solid rgba(231,76,60,0.3);border-radius:var(--radl);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.risk-hero-label{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--vr);margin-bottom:0.5rem}
+.risk-hero-amount{font-size:clamp(2.5rem,8vw,4rem);font-weight:800;color:var(--vw);line-height:1;margin-bottom:0.5rem}
+.risk-hero-sub{font-size:0.9rem;color:var(--vm);line-height:1.5}
+.risk-hero-sub span{font-weight:600}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+@media(max-width:500px){.two-col{grid-template-columns:1fr}}
+.stat-card{background:var(--vc);border:1px solid var(--vb);border-radius:var(--radl);padding:1.2rem}
+.stat-card.danger{border-color:rgba(231,76,60,0.3);background:linear-gradient(135deg,var(--vc),#1f1510)}
+.stat-card.warning{border-color:rgba(243,156,18,0.3);background:linear-gradient(135deg,var(--vc),#1f1a0a)}
+.stat-card.positive{border-color:rgba(46,204,113,0.3);background:linear-gradient(135deg,var(--vc),#0a1f12)}
+.stat-card.info{border-color:rgba(52,152,219,0.3);background:linear-gradient(135deg,var(--vc),#0a1520)}
+.stat-icon{font-size:1.3rem;margin-bottom:0.5rem}
+.stat-val{font-size:1.2rem;font-weight:700;color:var(--vw);line-height:1.1;margin-bottom:0.2rem}
+.stat-val.red{color:var(--vr)}
+.stat-val.amber{color:var(--va)}
+.stat-val.green{color:var(--vg)}
+.stat-val.blue{color:#3498DB}
+.stat-lbl{font-size:0.72rem;color:var(--vm);text-transform:uppercase;letter-spacing:0.08em}
+.benefit-compare{background:var(--vc);border:1px solid var(--vb);border-radius:var(--radl);padding:1.4rem;margin-bottom:1.5rem}
+.benefit-compare-title{font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--vm);margin-bottom:1.2rem}
+.bc-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.8rem}
+.bc-col{text-align:center;padding:1rem;border-radius:var(--rad)}
+.bc-col.bad{background:rgba(231,76,60,0.08);border:1px solid rgba(231,76,60,0.2)}
+.bc-col.good{background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.2)}
+.bc-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin-bottom:0.4rem}
+.bc-label.bad{color:var(--vr)}
+.bc-label.good{color:var(--vg)}
+.bc-amount{font-size:1.4rem;font-weight:800;margin-bottom:0.2rem}
+.bc-amount.bad{color:var(--vr)}
+.bc-amount.good{color:var(--vg)}
+.bc-sub{font-size:0.75rem;color:var(--vm)}
+.bc-delta{text-align:center;padding:0.8rem;background:var(--vgl);border:1px solid rgba(46,204,113,0.2);border-radius:var(--rad);font-size:0.9rem;color:var(--vt)}
+.bc-delta strong{color:var(--vg)}
+.waterfall{background:var(--vc);border:1px solid var(--vb);border-radius:var(--radl);padding:1.4rem;margin-bottom:1.5rem}
+.waterfall-title{font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--vm);margin-bottom:1.2rem}
+.wf-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.wf-label{font-size:0.82rem;color:var(--vt);width:200px;flex-shrink:0}
+@media(max-width:500px){.wf-label{width:130px;font-size:0.75rem}}
+.wf-bar-wrap{flex:1;height:8px;background:var(--vb);border-radius:100px;overflow:hidden}
+.wf-bar{height:100%;border-radius:100px}
+.wf-val{font-size:0.8rem;font-weight:600;color:var(--vt);width:80px;text-align:right;flex-shrink:0}
+.narrative-card{background:var(--vc);border:1px solid var(--vb);border-radius:var(--radl);padding:1.4rem;margin-bottom:1.5rem}
+.narrative-title{font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--vm);margin-bottom:1rem}
+.narrative-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--vb)}
+.narrative-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.narrative-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+.narrative-text{font-size:0.85rem;color:var(--vt);line-height:1.55}
+.narrative-text strong{color:var(--vw)}
+.roi-card{background:linear-gradient(135deg,#0a1f12,#0e2318);border:1px solid rgba(46,204,113,0.25);border-radius:var(--radl);padding:1.6rem;margin-bottom:1.5rem}
+.roi-title{font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--vg);margin-bottom:1rem}
+.roi-equation{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.roi-box{background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.2);border-radius:var(--rad);padding:0.8rem 1.2rem;text-align:center}
+.roi-box strong{display:block;font-size:1.2rem;font-weight:700;color:var(--vg)}
+.roi-box span{font-size:0.72rem;color:var(--vm);text-transform:uppercase;letter-spacing:0.08em}
+.roi-op{font-size:1.4rem;color:var(--vg);font-weight:300}
+.roi-desc{font-size:0.85rem;color:var(--vm);text-align:center;line-height:1.55}
+.cta-card{background:linear-gradient(135deg,#0D1219,#0e2318);border:1px solid rgba(46,204,113,0.2);border-radius:var(--radl);padding:2rem;text-align:center;margin-bottom:1.5rem}
+.cta-card h3{font-size:1.1rem;font-weight:700;color:var(--vw);margin-bottom:0.5rem}
+.cta-card p{font-size:0.87rem;color:var(--vm);margin-bottom:1.5rem;max-width:480px;margin-left:auto;margin-right:auto}
+.btn-cta{display:inline-block;background:var(--vg);color:#0a1a0e;border:none;border-radius:var(--rad);padding:13px 32px;font-size:0.9rem;font-weight:700;letter-spacing:0.04em;cursor:pointer;text-transform:uppercase;text-decoration:none;transition:background 0.15s}
+.btn-cta:hover{background:#34d979}
+.btn-reset{background:transparent;border:1px solid var(--vb);color:var(--vm);border-radius:var(--rad);padding:10px 24px;font-size:0.85rem;cursor:pointer;transition:all 0.15s;display:block;margin:1rem auto 0}
+.btn-reset:hover{border-color:var(--vi);color:var(--vt)}
+footer{background:var(--vk);border-top:1px solid var(--vb);padding:2rem;text-align:center}
+.footer-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:0.6rem}
+.footer-text{font-size:0.78rem;color:var(--vi)}
+.footer-text a{color:var(--vg);text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="https://versent.com.au" target="_blank" rel="noopener">
+    <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
+      <rect width="100" height="100" rx="12" fill="#111418"/>
+      <polygon points="50,20 80,78 65,78 50,48 35,78 20,78" fill="#2ECC71"/>
+    </svg>
+    <span class="logo-name">Versent</span>
+  </a>
+  <span class="header-tag">Business Strategy – OCM</span>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Change Investment Case</div>
+  <h1>What's really<br><span>at stake?</span></h1>
+  <p>Enter your program details and see exactly what your investment is at risk of losing — and what effective change management is worth in dollars.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>143%</strong><span>Average ROI with strong OCM</span></div>
+    <div class="hero-stat"><strong>35%</strong><span>ROI without OCM</span></div>
+    <div class="hero-stat"><strong>6&times;</strong><span>More likely to succeed</span></div>
+    <div class="hero-stat"><strong>2 in 3</strong><span>Programs fail or underperform</span></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- Section 1: Budgets -->
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div><h2>Your Program Investment</h2><p>The numbers we're protecting</p></div>
+  </div>
+
+  <div class="card">
+    <label>Total program investment</label>
+    <div class="sublabel">Include technology, licensing, implementation, and internal resource costs</div>
+    <div class="input-wrap">
+      <span class="input-prefix">$</span>
+      <input type="number" id="budgetInput" placeholder="e.g. 5000000" min="0" oninput="checkReady()"/>
+    </div>
+  </div>
+
+  <div class="card">
+    <label>Expected annual benefits once live</label>
+    <div class="sublabel">What value does this program deliver per year — efficiency savings, revenue, cost avoidance?</div>
+    <div class="input-wrap">
+      <span class="input-prefix">$</span>
+      <input type="number" id="benefitInput" placeholder="e.g. 2000000" min="0" oninput="checkReady()"/>
+    </div>
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- Section 2: Program questions -->
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div><h2>Program Profile</h2><p>Tell us about the change</p></div>
+  </div>
+
+  <div class="card">
+    <span class="q-label">How much of people's daily work will change?</span>
+    <div class="options-grid" id="g-q1">
+      <button class="opt-btn" onclick="pick('q1',1,this)">Under 20%<span class="opt-score">Minor adjustments</span></button>
+      <button class="opt-btn" onclick="pick('q1',2,this)">20 – 40%<span class="opt-score">Moderate shift</span></button>
+      <button class="opt-btn" onclick="pick('q1',3,this)">40 – 70%<span class="opt-score">Significant change</span></button>
+      <button class="opt-btn" onclick="pick('q1',4,this)">Over 70%<span class="opt-score">Role redefined</span></button>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="q-label">What happens if adoption is poor?</span>
+    <div class="options-grid" id="g-q2">
+      <button class="opt-btn" onclick="pick('q2',1,this)">Minor inconvenience<span class="opt-score">Easy to recover</span></button>
+      <button class="opt-btn" onclick="pick('q2',2,this)">Delayed benefits<span class="opt-score">Slower ROI</span></button>
+      <button class="opt-btn" onclick="pick('q2',3,this)">Significant rework<span class="opt-score">Cost and delay</span></button>
+      <button class="opt-btn" onclick="pick('q2',4,this)">Program failure<span class="opt-score">Full write-off risk</span></button>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="q-label">How is your organisation handling change right now?</span>
+    <div class="options-grid" id="g-q3">
+      <button class="opt-btn" onclick="pick('q3',1,this)">Structured approach<span class="opt-score">Framework in place</span></button>
+      <button class="opt-btn" onclick="pick('q3',2,this)">Some structure<span class="opt-score">Inconsistent</span></button>
+      <button class="opt-btn" onclick="pick('q3',3,this)">Largely ad hoc<span class="opt-score">No framework</span></button>
+      <button class="opt-btn" onclick="pick('q3',4,this)">No approach<span class="opt-score">Change is unmanaged</span></button>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="q-label">How visible is executive sponsorship for this program?</span>
+    <div class="options-grid" id="g-q4">
+      <button class="opt-btn" onclick="pick('q4',1,this)">Highly visible<span class="opt-score">Active champion</span></button>
+      <button class="opt-btn" onclick="pick('q4',2,this)">Visible but passive<span class="opt-score">Supportive</span></button>
+      <button class="opt-btn" onclick="pick('q4',3,this)">Limited visibility<span class="opt-score">Competing priorities</span></button>
+      <button class="opt-btn" onclick="pick('q4',4,this)">Not visible<span class="opt-score">No clear sponsor</span></button>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="q-label">How many people are impacted by this change?</span>
+    <div class="options-grid" id="g-q5">
+      <button class="opt-btn" onclick="pick('q5',1,this)">Under 100<span class="opt-score">Small group</span></button>
+      <button class="opt-btn" onclick="pick('q5',2,this)">100 – 500<span class="opt-score">Mid-size</span></button>
+      <button class="opt-btn" onclick="pick('q5',3,this)">500 – 2,000<span class="opt-score">Large</span></button>
+      <button class="opt-btn" onclick="pick('q5',4,this)">2,000+<span class="opt-score">Enterprise-wide</span></button>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <button class="btn-calculate" id="calcBtn" disabled onclick="calculate()">Calculate My Risk Exposure</button>
+  </div>
+  <p class="incomplete-hint" id="hint">Enter both budgets and answer all 5 questions</p>
+
+  <!-- ── Results ── -->
+  <div id="results">
+
+    <div class="results-title">Your Change Investment Case</div>
+    <div class="results-sub" id="resultsSub"></div>
+
+    <!-- Risk hero -->
+    <div class="risk-hero">
+      <div class="risk-hero-label">&#9888; Total program value at risk</div>
+      <div class="risk-hero-amount" id="riskAmount"></div>
+      <div class="risk-hero-sub" id="riskSub"></div>
+    </div>
+
+    <!-- 4 stat cards -->
+    <div class="two-col" id="statCards"></div>
+
+    <!-- Benefit realisation compare -->
+    <div class="benefit-compare">
+      <div class="benefit-compare-title">Benefit realisation — with vs without OCM</div>
+      <div class="bc-row" id="bcRow"></div>
+      <div class="bc-delta" id="bcDelta"></div>
+    </div>
+
+    <!-- Cost breakdown -->
+    <div class="waterfall">
+      <div class="waterfall-title">Where the risk lives — cost breakdown</div>
+      <div id="waterfallRows"></div>
+    </div>
+
+    <!-- Narrative -->
+    <div class="narrative-card">
+      <div class="narrative-title">What this means for your program</div>
+      <div id="narrativeItems"></div>
+    </div>
+
+    <!-- ROI of change -->
+    <div class="roi-card">
+      <div class="roi-title">&#10022; The return on investing in change</div>
+      <div class="roi-equation" id="roiEquation"></div>
+      <div class="roi-desc" id="roiDesc"></div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card">
+      <h3>Ready to protect your program investment?</h3>
+      <p>Versent's Business Strategy – OCM practice helps organisations land change that sticks. Let's talk about what the right level of support looks like for your program.</p>
+      <a class="btn-cta" href="https://versent.com.au/contact/" target="_blank">Talk to Versent</a>
+    </div>
+
+    <button class="btn-reset" onclick="resetTool()">&#8635; Start Again</button>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-logo">
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
+      <rect width="100" height="100" rx="8" fill="#111418"/>
+      <polygon points="50,18 78,78 63,78 50,46 37,78 22,78" fill="#2ECC71"/>
+    </svg>
+    <span style="font-size:0.85rem;font-weight:700;letter-spacing:0.08em;color:#FFFFFF;text-transform:uppercase;">Versent</span>
+  </div>
+  <div class="footer-text">Business Strategy &ndash; OCM &middot; <a href="https://versent.com.au" target="_blank">versent.com.au</a></div>
+</footer>
+
+<script>
+var ans = {};
+var qCount = 0;
+
+function pick(q, score, btn) {
+  var grid = document.getElementById('g-' + q);
+  var btns = grid.getElementsByClassName('opt-btn');
+  var wasAnswered = ans[q] !== undefined;
+  for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('selected'); }
+  btn.classList.add('selected');
+  ans[q] = score;
+  if (!wasAnswered) qCount++;
+  checkReady();
+}
+
+function checkReady() {
+  var budget = parseFloat(document.getElementById('budgetInput').value);
+  var benefit = parseFloat(document.getElementById('benefitInput').value);
+  var ready = budget > 0 && benefit > 0 && qCount === 5;
+  document.getElementById('calcBtn').disabled = !ready;
+  if (ready) {
+    document.getElementById('hint').textContent = 'Ready — click to see your risk exposure';
+  } else if (!budget || budget <= 0) {
+    document.getElementById('hint').textContent = 'Enter your program investment to get started';
+  } else if (!benefit || benefit <= 0) {
+    document.getElementById('hint').textContent = 'Enter your expected annual benefits';
+  } else {
+    var rem = 5 - qCount;
+    document.getElementById('hint').textContent = rem + ' question' + (rem !== 1 ? 's' : '') + ' remaining';
+  }
+}
+
+function fmt(n) {
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return '$' + Math.round(n/1000) + 'K';
+  return '$' + Math.round(n);
+}
+
+function calculate() {
+  var budget  = parseFloat(document.getElementById('budgetInput').value);
+  var benefit = parseFloat(document.getElementById('benefitInput').value);
+
+  // Risk model
+  // Daily work change drives base risk
+  var workRisk   = [0.25, 0.40, 0.55, 0.70][ans.q1-1];
+  // Poor adoption consequence multiplier
+  var adoptMod   = [0.80, 1.00, 1.20, 1.40][ans.q2-1];
+  // Current change maturity modifier
+  var maturityMod= [0.75, 1.00, 1.20, 1.35][ans.q3-1];
+  // Sponsorship modifier
+  var sponsorMod = [0.80, 1.00, 1.20, 1.40][ans.q4-1];
+  // Scale modifier
+  var scaleMod   = [0.90, 1.00, 1.15, 1.25][ans.q5-1];
+
+  var riskPct = workRisk * adoptMod * maturityMod * sponsorMod * scaleMod;
+  riskPct = Math.min(riskPct, 0.88);
+
+  var totalAtRisk = budget * riskPct;
+
+  // Benefit realisation
+  // Without OCM: organisations average 35% ROI — so benefit realisation is poor
+  // Base benefit realisation without OCM drops with each risk factor
+  var benefitWithoutOCM = benefit * (0.40 - (riskPct * 0.35));
+  benefitWithoutOCM = Math.max(benefitWithoutOCM, benefit * 0.10);
+  // With OCM: 143% ROI benchmark — benefit realisation is strong
+  var benefitWithOCM = benefit * (0.85 - (riskPct * 0.10));
+  benefitWithOCM = Math.min(benefitWithOCM, benefit * 0.95);
+  var benefitDelta = benefitWithOCM - benefitWithoutOCM;
+
+  // Cost breakdown
+  var failureCost  = totalAtRisk * 0.35;
+  var adoptionCost = totalAtRisk * 0.25;
+  var prodCost     = totalAtRisk * 0.20;
+  var reworkCost   = totalAtRisk * 0.12;
+  var turnoverCost = totalAtRisk * 0.08;
+
+  // OCM investment & ROI
+  var cmCost       = budget * 0.07;
+  var valueProtected = totalAtRisk * 0.75;
+  var roiMultiple  = Math.round(valueProtected / cmCost);
+
+  // % of daily work changing label
+  var workLabels = ['under 20%','20–40%','40–70%','over 70%'];
+  var workLabel = workLabels[ans.q1-1];
+
+  // Risk colour
+  var riskColor = riskPct < 0.40 ? '#F39C12' : riskPct < 0.60 ? '#E87A2E' : '#E74C3C';
+
+  // ── Populate ──
+
+  document.getElementById('resultsSub').textContent =
+    'Based on a ' + fmt(budget) + ' program · ' + fmt(benefit) + ' expected annual benefits · Generated ' +
+    new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
+
+  document.getElementById('riskAmount').textContent = fmt(totalAtRisk);
+  document.getElementById('riskAmount').style.color = riskColor;
+  document.getElementById('riskSub').innerHTML =
+    '<span style="color:' + riskColor + '">' + Math.round(riskPct*100) + '% of your ' + fmt(budget) + ' investment</span> is at risk without effective change management.<br>' +
+    'With <strong>' + workLabel + '</strong> of daily work changing, poor adoption assurance puts your entire program at stake.';
+
+  // Stat cards
+  document.getElementById('statCards').innerHTML =
+    '<div class="stat-card danger"><div class="stat-icon">&#128308;</div><div class="stat-val red">' + fmt(totalAtRisk) + '</div><div class="stat-lbl">Total value at risk</div></div>' +
+    '<div class="stat-card warning"><div class="stat-icon">&#128200;</div><div class="stat-val amber">' + fmt(benefitWithoutOCM) + ' / yr</div><div class="stat-lbl">Benefits without OCM</div></div>' +
+    '<div class="stat-card positive"><div class="stat-icon">&#9989;</div><div class="stat-val green">' + fmt(benefitWithOCM) + ' / yr</div><div class="stat-lbl">Benefits with OCM</div></div>' +
+    '<div class="stat-card info"><div class="stat-icon">&#128176;</div><div class="stat-val blue">' + roiMultiple + '&times; ROI</div><div class="stat-lbl">Return on OCM investment</div></div>';
+
+  // Benefit compare
+  document.getElementById('bcRow').innerHTML =
+    '<div class="bc-col bad"><div class="bc-label bad">Without OCM</div><div class="bc-amount bad">' + fmt(benefitWithoutOCM) + '</div><div class="bc-sub">annual benefits realised</div></div>' +
+    '<div class="bc-col good"><div class="bc-label good">With OCM</div><div class="bc-amount good">' + fmt(benefitWithOCM) + '</div><div class="bc-sub">annual benefits realised</div></div>';
+  document.getElementById('bcDelta').innerHTML =
+    'Effective change management could unlock an additional <strong>' + fmt(benefitDelta) + ' per year</strong> in benefits your program is designed to deliver.';
+
+  // Waterfall
+  var rows = [
+    {label:'Program failure / rework',        val:failureCost,  pct:failureCost/totalAtRisk,  color:'#E74C3C'},
+    {label:'Delayed adoption & low usage',     val:adoptionCost, pct:adoptionCost/totalAtRisk, color:'#E87A2E'},
+    {label:'Productivity loss in transition',  val:prodCost,     pct:prodCost/totalAtRisk,     color:'#F39C12'},
+    {label:'Re-training & support costs',      val:reworkCost,   pct:reworkCost/totalAtRisk,   color:'#D4A017'},
+    {label:'Staff turnover from poor change',  val:turnoverCost, pct:turnoverCost/totalAtRisk, color:'#8B96A3'},
+  ];
+  document.getElementById('waterfallRows').innerHTML = rows.map(function(r) {
+    return '<div class="wf-row"><div class="wf-label">' + r.label + '</div><div class="wf-bar-wrap"><div class="wf-bar" style="width:' + Math.round(r.pct*100) + '%;background:' + r.color + '"></div></div><div class="wf-val">' + fmt(r.val) + '</div></div>';
+  }).join('');
+
+  // Narrative
+  var items = [];
+  if (ans.q1 >= 3) items.push({icon:'&#128308;', text:'<strong>High daily work disruption.</strong> With ' + workLabel + ' of daily work changing, this program will fundamentally alter how people operate. Without structured change support, resistance is predictable and adoption will stall — directly eroding the ' + fmt(benefit) + ' in annual benefits this program is designed to deliver.'});
+  if (ans.q2 >= 3) items.push({icon:'&#128308;', text:'<strong>Poor adoption has serious consequences.</strong> You\'ve identified that inadequate adoption leads to ' + (ans.q2 === 4 ? 'program failure — a full write-off of your ' + fmt(budget) + ' investment' : 'significant rework and delay — compounding costs on top of an already substantial investment') + '. This makes change management a risk mitigation priority, not a nice-to-have.'});
+  if (ans.q3 >= 3) items.push({icon:'&#128993;', text:'<strong>Unmanaged change environment.</strong> Without a structured change approach, this program will land on top of an organisation that has no framework to absorb it. Research shows organisations with poor change maturity are 3&times; more likely to see adoption fail within the first 90 days.'});
+  if (ans.q4 >= 3) items.push({icon:'&#128993;', text:'<strong>Sponsorship visibility gap.</strong> Invisible or absent executive sponsorship is the single biggest predictor of change failure. When leaders don\'t visibly champion the change, teams take their cue and disengage. Securing and activating a visible sponsor is the highest-leverage action available to this program right now.'});
+  items.push({icon:'&#128994;', text:'<strong>The opportunity.</strong> Organisations with strong OCM average 143% ROI on their change investment — compared to just 35% without it. An OCM investment of approximately ' + fmt(cmCost) + ' (7% of your program budget) could protect ' + fmt(valueProtected) + ' of at-risk value and unlock ' + fmt(benefitDelta) + ' per year in additional benefit realisation.'});
+
+  document.getElementById('narrativeItems').innerHTML = items.map(function(n) {
+    return '<div class="narrative-item"><div class="narrative-icon">' + n.icon + '</div><div class="narrative-text">' + n.text + '</div></div>';
+  }).join('');
+
+  // ROI equation
+  document.getElementById('roiEquation').innerHTML =
+    '<div class="roi-box"><strong>' + fmt(cmCost) + '</strong><span>OCM investment</span></div>' +
+    '<div class="roi-op">&#8594;</div>' +
+    '<div class="roi-box"><strong>' + fmt(valueProtected) + '</strong><span>Value protected</span></div>' +
+    '<div class="roi-op">+</div>' +
+    '<div class="roi-box"><strong>' + fmt(benefitDelta) + ' / yr</strong><span>Extra benefits</span></div>' +
+    '<div class="roi-op">=</div>' +
+    '<div class="roi-box"><strong>' + roiMultiple + '&times; ROI</strong><span>Return on change</span></div>';
+
+  document.getElementById('roiDesc').textContent =
+    'For every dollar invested in structured change management, this program stands to recover ' + roiMultiple + ' dollars of at-risk value — plus ' + fmt(benefitDelta) + ' per year in benefits that would otherwise go unrealised. That is not a cost. It is the highest-return line item in your program budget.';
+
+  var r = document.getElementById('results');
+  r.style.display = 'block';
+  setTimeout(function(){ r.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
+}
+
+function resetTool() {
+  ans = {};
+  qCount = 0;
+  var btns = document.getElementsByClassName('opt-btn');
+  for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('selected'); }
+  document.getElementById('budgetInput').value = '';
+  document.getElementById('benefitInput').value = '';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('calcBtn').disabled = true;
+  document.getElementById('hint').textContent = 'Enter both budgets and answer all 5 questions';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
