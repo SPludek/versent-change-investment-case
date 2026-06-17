@@ -119,6 +119,12 @@ footer{background:var(--vk);border-top:1px solid var(--vb);padding:2rem;text-ali
 .footer-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:0.6rem}
 .footer-text{font-size:0.78rem;color:var(--vi)}
 .footer-text a{color:var(--vg);text-decoration:none}
+.help-tip{display:inline-block;margin-left:8px;width:16px;height:16px;background:var(--vb);border:1px solid var(--vm);border-radius:50%;font-size:0.65rem;color:var(--vm);text-align:center;line-height:16px;cursor:pointer;position:relative;vertical-align:middle}
+.help-tip:hover .tooltip{display:block}
+.tooltip{display:none;position:absolute;left:24px;top:-8px;width:260px;background:#1E252F;border:1px solid var(--vb);border-radius:var(--rad);padding:0.8rem 1rem;font-size:0.78rem;color:var(--vt);line-height:1.5;z-index:99;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+.tooltip strong{color:var(--vg);display:block;margin-bottom:0.3rem}
+.tooltip ul{margin:0.4rem 0 0 1rem;padding:0}
+.tooltip ul li{margin-bottom:0.2rem}
 </style>
 </head>
 <body>
@@ -171,7 +177,9 @@ footer{background:var(--vk);border-top:1px solid var(--vb);padding:2rem;text-ali
   </div>
 
   <div class="card">
-    <label>Expected annual benefits once live</label>
+    <label>Expected annual benefits once live
+      <span class="help-tip">?<span class="tooltip"><strong>Where to find this number</strong>Check your program business case, ask your project sponsor or CFO, or look for a benefits register. It includes:<ul><li>Efficiency &amp; time savings</li><li>Revenue uplift</li><li>Cost avoidance (e.g. retiring legacy systems)</li><li>Risk &amp; compliance cost reduction</li></ul></span></span>
+    </label>
     <div class="sublabel">What value does this program deliver per year — efficiency savings, revenue, cost avoidance?</div>
     <div class="input-wrap">
       <span class="input-prefix">$</span>
@@ -188,7 +196,9 @@ footer{background:var(--vk);border-top:1px solid var(--vb);padding:2rem;text-ali
   </div>
 
   <div class="card">
-    <span class="q-label">How much of people's daily work will change?</span>
+    <span class="q-label">How much of people's daily work will change?
+      <span class="help-tip">?<span class="tooltip"><strong>How to estimate this</strong>Think about the key tasks your people do every day — how many will look different after go-live?<ul><li><strong style="color:var(--vt)">Under 20%</strong> — minor tool or process tweak</li><li><strong style="color:var(--vt)">20–40%</strong> — new system added alongside existing work</li><li><strong style="color:var(--vt)">40–70%</strong> — significant retraining needed</li><li><strong style="color:var(--vt)">Over 70%</strong> — role is fundamentally redefined</li></ul>Sense check: ask a frontline manager "what will a typical Tuesday look like after go-live?"</span></span>
+    </span>
     <div class="options-grid" id="g-q1">
       <button class="opt-btn" onclick="pick('q1',1,this)">Under 20%<span class="opt-score">Minor adjustments</span></button>
       <button class="opt-btn" onclick="pick('q1',2,this)">20 – 40%<span class="opt-score">Moderate shift</span></button>
@@ -383,7 +393,12 @@ function calculate() {
   var turnoverCost = totalAtRisk * 0.08;
 
   // OCM investment & ROI
-  var cmCost       = budget * 0.07;
+  // OCM cost based on $2,150/day Versent rate
+  // Days estimated from risk profile: scale + complexity
+  var baseDays = 40 + (ans.q5 - 1) * 20;  // 40-100 days based on scale
+  var complexMod = 1 + (riskPct - 0.25) * 1.5;
+  var estDays = Math.round(baseDays * complexMod);
+  var cmCost = estDays * 2150;
   var valueProtected = totalAtRisk * 0.75;
   var roiMultiple  = Math.round(valueProtected / cmCost);
 
@@ -438,7 +453,7 @@ function calculate() {
   if (ans.q2 >= 3) items.push({icon:'&#128308;', text:'<strong>Poor adoption has serious consequences.</strong> You\'ve identified that inadequate adoption leads to ' + (ans.q2 === 4 ? 'program failure — a full write-off of your ' + fmt(budget) + ' investment' : 'significant rework and delay — compounding costs on top of an already substantial investment') + '. This makes change management a risk mitigation priority, not a nice-to-have.'});
   if (ans.q3 >= 3) items.push({icon:'&#128993;', text:'<strong>Unmanaged change environment.</strong> Without a structured change approach, this program will land on top of an organisation that has no framework to absorb it. Research shows organisations with poor change maturity are 3&times; more likely to see adoption fail within the first 90 days.'});
   if (ans.q4 >= 3) items.push({icon:'&#128993;', text:'<strong>Sponsorship visibility gap.</strong> Invisible or absent executive sponsorship is the single biggest predictor of change failure. When leaders don\'t visibly champion the change, teams take their cue and disengage. Securing and activating a visible sponsor is the highest-leverage action available to this program right now.'});
-  items.push({icon:'&#128994;', text:'<strong>The opportunity.</strong> Organisations with strong OCM average 143% ROI on their change investment — compared to just 35% without it. An OCM investment of approximately ' + fmt(cmCost) + ' (7% of your program budget) could protect ' + fmt(valueProtected) + ' of at-risk value and unlock ' + fmt(benefitDelta) + ' per year in additional benefit realisation.'});
+  items.push({icon:'&#128994;', text:'<strong>The opportunity.</strong> Organisations with strong OCM average 143% ROI on their change investment — compared to just 35% without it. An OCM investment of approximately ' + fmt(cmCost) + ' (est. ' + estDays + ' days at $2,150/day) could protect ' + fmt(valueProtected) + ' of at-risk value and unlock ' + fmt(benefitDelta) + ' per year in additional benefit realisation.'});
 
   document.getElementById('narrativeItems').innerHTML = items.map(function(n) {
     return '<div class="narrative-item"><div class="narrative-icon">' + n.icon + '</div><div class="narrative-text">' + n.text + '</div></div>';
@@ -455,7 +470,7 @@ function calculate() {
     '<div class="roi-box"><strong>' + roiMultiple + '&times; ROI</strong><span>Return on change</span></div>';
 
   document.getElementById('roiDesc').textContent =
-    'For every dollar invested in structured change management, this program stands to recover ' + roiMultiple + ' dollars of at-risk value — plus ' + fmt(benefitDelta) + ' per year in benefits that would otherwise go unrealised. That is not a cost. It is the highest-return line item in your program budget.';
+    'Based on an estimated ' + estDays + ' days at $2,150 per day, this program\'s OCM investment of ' + fmt(cmCost) + ' stands to recover ' + roiMultiple + ' dollars of at-risk value for every dollar spent — plus ' + fmt(benefitDelta) + ' per year in benefits that would otherwise go unrealised.';
 
   var r = document.getElementById('results');
   r.style.display = 'block';
